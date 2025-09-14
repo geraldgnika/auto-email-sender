@@ -1,0 +1,15 @@
+{
+  "name": "auto-email-sender",
+  "version": "1.0.0",
+  "description": "An automated email sender built with Node.js and Express, designed to send personalized emails with attachments to multiple recipients. It supports HTML and plain text templates, template variables, and uses SMTP for sending emails. Ideal for sending CVs or bulk emails in a controlled way.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.4"
+  }
+}

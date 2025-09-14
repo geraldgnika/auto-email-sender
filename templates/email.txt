@@ -1,0 +1,12 @@
+Pershendetje drejtues te {{name}},
+
+Shpresoj te jeni mire! Po ju kontaktoj per te shprehur interesin tim per mundesite e punesimit prane kompanise suaj si Web Developer. Aftesite e mija me te forta jane ne Angular, React, Node.js, Express.js dhe Laravel. Do te isha i lumtur te diskutoja me shume mbi nevojat tuaja dhe menyren se si mund te kontribuoj ne ekipin tuaj. Jam i hapur ndaj mundesive te ndryshme dhe gjithashtu jam fleksibel persa i perket ceshtjes se pageses, duke qene i gatshem per negociata bazuar ne kerkesat dhe mundesite e kompanise suaj.
+
+Bashkengjitur ketij emaili do te gjeni CV-ne time, numrin e telefonit dhe portfolion tim me projekte. Gjithashtu shpreh gatishmerine t’ju dergoj informacione te tjera sipas kerkeses suaj.
+
+Me respekt,
+Gerald Nika
+
+📞 Nr. Tel: {{phone}}
+🌐 Portfolio: {{portfolio}}
+💻 GitHub: {{github}}

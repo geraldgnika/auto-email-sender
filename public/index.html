@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Automatic Email Sender</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col items-center py-10 px-4">
+  <header class="w-full max-w-2xl mb-8 text-center cursor-default">
+    <h1 class="text-2xl font-bold mb-2 text-gray-900">Automatic Email Sender</h1>
+    <p class="text-gray-500 text-sm">Recipient + Subject + Body + Attachment. Google API Limit: ~50 emails/hour.</p>
+  </header>
+
+  <ul id="list" class="w-full max-w-2xl space-y-4"></ul>
+
+  <footer class="mt-10 text-gray-400 text-sm text-center cursor-default">
+    Emails sent using your SMTP credentials. Developed by: Gerald Nika &copy; 2025.
+  </footer>
+
+  <script>
+    const API_KEY = 'wesfmldrilmgkrmdfngndfgjrnrjgdfnggnncxmvndfsdkjfnkdfnffvskdnfdjnvnnvnn';
+
+    async function fetchCompanies() {
+      const res = await fetch('companies.json');
+      return res.json();
+    }
+
+    function createRow(c, index) {
+      const li = document.createElement('li');
+      li.className = "bg-white my-0 rounded-xl shadow px-4 py-3 flex justify-between items-center transition-transform duration-200 hover:shadow-md hover:-translate-y-0.5";
+
+      const left = document.createElement('div');
+      left.className = "font-semibold text-gray-900 cursor-default";
+      
+      // Add index, name, and email
+      left.innerHTML = `<span>${index + 1}. ${c.name}</span> <span class="text-gray-500 font-normal">(${c.email})</span>`;
+
+      const right = document.createElement('div');
+      right.className = "flex items-center space-x-3";
+
+      const btn = document.createElement('button');
+      btn.textContent = 'Send Email';
+      btn.className = "bg-blue-600 text-white px-3 py-1 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors duration-200";
+      
+      const status = document.createElement('span');
+      status.className = "text-gray-500 text-sm";
+
+      btn.onclick = async () => {
+        btn.disabled = true;
+        status.textContent = '';
+        const original = btn.textContent;
+        btn.textContent = 'Sending...';
+
+        try {
+          const res = await fetch('/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY },
+            body: JSON.stringify({ name: c.name, email: c.email })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || JSON.stringify(data));
+          
+          status.textContent = 'Sent';
+          li.classList.remove('bg-white');
+          li.classList.add('bg-green-100'); // Highlight on success
+          btn.disabled = true;
+        } catch (err) {
+          console.error(err);
+          status.textContent = 'Error: ' + (err.message || err);
+        } finally {
+          btn.textContent = original;
+        }
+      };
+
+      right.append(btn, status);
+      li.append(left, right);
+      return li;
+    }
+
+    async function buildList() {
+      const companies = await fetchCompanies();
+      const ul = document.getElementById('list');
+      companies.forEach((c, index) => ul.appendChild(createRow(c, index)));
+    }
+
+    buildList();
+  </script>
+</body>
+</html>
